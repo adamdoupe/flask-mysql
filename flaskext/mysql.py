@@ -24,19 +24,18 @@ class MySQL(object):
         self.app.teardown_request(self.teardown_request)
         self.app.before_request(self.before_request)
 
-    def connect(self):
-        kwargs = {}
-        if self.app.config['MYSQL_DATABASE_HOST']:
+    def connect(self, **kwargs):
+        if self.app.config['MYSQL_DATABASE_HOST'] and not 'host' in kwargs:
             kwargs['host'] = self.app.config['MYSQL_DATABASE_HOST']
-        if self.app.config['MYSQL_DATABASE_PORT']:
+        if self.app.config['MYSQL_DATABASE_PORT'] and not 'port' in kwargs:
             kwargs['port'] = self.app.config['MYSQL_DATABASE_PORT']
-        if self.app.config['MYSQL_DATABASE_USER']:
+        if self.app.config['MYSQL_DATABASE_USER'] and not 'user' in kwargs:
             kwargs['user'] = self.app.config['MYSQL_DATABASE_USER']
-        if self.app.config['MYSQL_DATABASE_PASSWORD']:
+        if self.app.config['MYSQL_DATABASE_PASSWORD'] and not 'passwd' in kwargs:
             kwargs['passwd'] = self.app.config['MYSQL_DATABASE_PASSWORD']
-        if self.app.config['MYSQL_DATABASE_DB']:
+        if self.app.config['MYSQL_DATABASE_DB'] and not 'db' in kwargs:
             kwargs['db'] = self.app.config['MYSQL_DATABASE_DB']
-        if self.app.config['MYSQL_DATABASE_CHARSET']:
+        if self.app.config['MYSQL_DATABASE_CHARSET'] and not 'charset' in kwargs:
             kwargs['charset'] = self.app.config['MYSQL_DATABASE_CHARSET']
         return MySQLdb.connect(**kwargs)
 
